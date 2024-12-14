@@ -1,4 +1,4 @@
-// 꽃 데이터 배열
+
 const flowers = [
     { name: "철쭉", meaning: "사랑의 즐거움", image: "철쭉.jpg" },
     { name: "개나리", meaning: "희망", image: "개나리.jpg" },
@@ -8,38 +8,35 @@ const flowers = [
     { name: "참꽃", meaning: "다정", image: "참꽃.jpg" },
 ];
 
-// HTML 요소 선택 (getElementById를 사용하여 특정 id를 가진 요소를 선택)
-const flowerContainer = document.getElementById("flower-container"); // 꽃들이 표시될 컨테이너
-const flowerInfo = document.getElementById("flower-info"); // 꽃 정보 표시 영역
-const giftForm = document.getElementById("gift-form"); // 선물 입력 폼
-const messageDiv = document.getElementById("message"); // 선물 완료 메시지 영역
-const flowerNameSpan = document.getElementById("flower-name"); // 선택된 꽃 이름 표시
-const flowerMeaningSpan = document.getElementById("flower-meaning"); // 선택된 꽃의 꽃말 표시
-const recipientInput = document.getElementById("recipient-name"); // 선물할 사람의 이름 입력 필드
-const completionMessage = document.getElementById("completion-message"); // 선물 완료 메시지 텍스트
 
-// 랜덤 꽃 생성 함수 (배열에서 6개의 꽃을 무작위로 선택해 화면에 표시)
+const flowerContainer = document.getElementById("flower-container"); 
+const flowerInfo = document.getElementById("flower-info"); 
+const giftForm = document.getElementById("gift-form"); 
+const messageDiv = document.getElementById("message"); 
+const flowerNameSpan = document.getElementById("flower-name"); 
+const flowerMeaningSpan = document.getElementById("flower-meaning"); 
+const recipientInput = document.getElementById("recipient-name"); 
+const completionMessage = document.getElementById("completion-message"); 
 function generateRandomFlowers() {
-    const selectedFlowers = []; // 무작위로 선택된 꽃 배열
+    const selectedFlowers = []; 
     while (selectedFlowers.length < 6) {
-        const randomIndex = Math.floor(Math.random() * flowers.length); // 0부터 flowers.length - 1 사이의 랜덤 인덱스
-        if (!selectedFlowers.includes(flowers[randomIndex])) { // 이미 선택된 꽃이 아닌 경우 추가
+        const randomIndex = Math.floor(Math.random() * flowers.length); 
+        if (!selectedFlowers.includes(flowers[randomIndex])) { 
             selectedFlowers.push(flowers[randomIndex]);
         }
     }
 
-    // 기존 화면 초기화 후 새로운 꽃 목록 추가
-    flowerContainer.innerHTML = ""; // flowerContainer 내부를 비움
-    selectedFlowers.forEach((flower) => { // 각 꽃 데이터에 대해 반복 처리
-        const flowerDiv = document.createElement("div"); // 각 꽃을 위한 div 생성
-        flowerDiv.classList.add("flower"); // "flower" 클래스 추가
+    flowerContainer.innerHTML = ""; 
+    selectedFlowers.forEach((flower) => {
+        const flowerDiv = document.createElement("div");
+        flowerDiv.classList.add("flower");
         flowerDiv.innerHTML = `
             <img src="${flower.image}" alt="${flower.name}" style="width:100%; height:80px;"> <!-- 꽃 이미지 -->
             <p>${flower.name}</p> <!-- 꽃 이름 -->
             <p class="flower-meaning">${flower.meaning}</p> <!-- 꽃말 -->
         `;
-        flowerDiv.addEventListener("click", () => selectFlower(flower)); // 클릭 이벤트 설정 (꽃 선택 시 처리)
-        flowerContainer.appendChild(flowerDiv); // flowerContainer에 flowerDiv 추가
+        flowerDiv.addEventListener("click", () => selectFlower(flower));)
+        flowerContainer.appendChild(flowerDiv); 
     });
 }
 

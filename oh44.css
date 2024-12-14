@@ -1,4 +1,4 @@
-/* 기본 스타일 */
+
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -7,25 +7,25 @@ body {
     padding: 0;
 }
 
-/* 전체 컨테이너 */
+
 .container {
     max-width: 500px;
-    margin: 100px auto; /* 전체 박스 윗부분 여백 */
-    padding: 20px 20px; /* 높이, 넓이 */
+    margin: 100px auto; 
+    padding: 20px 20px; 
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* 제목 */
+
 h1 {
     color: #333;
-    margin-bottom: 20px; /* 제목 아래 여백 */
-    margin-top: 10px; /* 제목 위쪽 여백 줄이기 */
+    margin-bottom: 20px;
+    margin-top: 10px; 
     font-size: 16px;
 }
 
-/* 꽃 이미지 컨테이너 */
+
 #flower-container {
     display: flex;
     justify-content: space-around;
@@ -33,7 +33,7 @@ h1 {
     margin: 20px 0;
 }
 
-/* 꽃 아이템 */
+
 .flower {
     width: 150px;
     height: 140px;
@@ -45,16 +45,16 @@ h1 {
     text-align: center;
     background-color: #fff;
     transition: transform 0.2s ease;
-    pointer-events: none; /* 클릭 및 호버 비활성화 */
+    pointer-events: none; 
 }
-/* hover-enabled 클래스가 추가되면 호버 효과 활성화 */
+
 .hover-enabled .flower {
-    pointer-events: auto; /* 클릭 및 호버 활성화 */
-    opacity: 1; /* 원래 상태 */
+    pointer-events: auto; 
+    opacity: 1; 
 }
 
 .hover-enabled .flower:hover {
-    transform: scale(1.1); /* 호버 시 확대 */
+    transform: scale(1.1); 
     border-color: #f39c12;
 }
 .flower:hover {
@@ -62,7 +62,7 @@ h1 {
     border-color: #f39c12;
 }
 
-/* 꽃 이름과 꽃말 */
+
 .flower p {
     margin: 5px 0;
     font-size: 14px;
@@ -70,16 +70,16 @@ h1 {
 }
 
 .flower .flower-meaning {
-    font-size: 12px; /* 꽃말은 이름보다 작게 */
+    font-size: 12px; 
     color: #777;
 }
 
-/* 숨김 처리 */
+
 .hidden {
     display: none;
 }
 
-/* 버튼 스타일 */
+
 button {
     margin-top: 10px;
     padding: 10px 20px;
@@ -95,17 +95,17 @@ button:hover {
     background-color: #2980b9;
 }
 
-/* 추가: 부드러운 스크롤링 */
+
 html {
     scroll-behavior: smooth;
 }
 
-/* 꽃 컨테이너 간의 구분 */
+
 .container + .container {
-    margin-top: 50px; /* 위 컨테이너와의 간격 */
+    margin-top: 50px; 
 }
 
-/* 추가된 메시지 상자 */
+
 #message {
     margin-top: 20px;
     padding: 15px;
@@ -116,7 +116,7 @@ html {
     color: #333;
 }
 
-/* 입력 폼 스타일 */
+
 #gift-form label {
     display: block;
     margin-bottom: 10px;
