@@ -105,7 +105,7 @@ document.getElementById("retry-button").addEventListener("click", () => {
 // "다음 문제 풀기" 버튼 클릭 시 실행
 document.getElementById("re-exam").addEventListener("click", () => {
     localStorage.setItem("score", localStorage.getItem("score") + 20); // 로컬 스토리지에 점수 추가
-    window.location.href = "page45.html"; // 다음 페이지로 이동
+    window.location.href = "lee45.html"; // 다음 페이지로 이동
 });
 
 // HTML 문서가 로드된 후 랜덤 꽃 생성 함수 실행

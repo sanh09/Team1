@@ -176,7 +176,11 @@
             const today = new Date().toISOString().split('T')[0];
 
             if (selectedDate === today) {
-                clearForm();
+                if (diaryData[selectedDate]) {
+                    loadDiaryData(selectedDate);
+                } else {
+                    clearForm();
+                }
             } else if (diaryData[selectedDate]) {
                 if (confirm('해당 날짜의 일기가 있습니다. 불러오시겠습니까?')) {
                     loadDiaryData(selectedDate);
