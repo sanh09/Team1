@@ -31,9 +31,9 @@ function generateRandomFlowers() {
         const flowerDiv = document.createElement("div");
         flowerDiv.classList.add("flower");
         flowerDiv.innerHTML = `
-            <img src="${flower.image}" alt="${flower.name}" style="width:100%; height:80px;"> <!-- 꽃 이미지 -->
-            <p>${flower.name}</p> <!-- 꽃 이름 -->
-            <p class="flower-meaning">${flower.meaning}</p> <!-- 꽃말 -->
+            <img src="${flower.image}" alt="${flower.name}" style="width:100%; height:80px;">
+            <p>${flower.name}</p> 
+            <p class="flower-meaning">${flower.meaning}</p> 
         `;
         flowerDiv.addEventListener("click", () => selectFlower(flower)); 
         flowerContainer.appendChild(flowerDiv); 
