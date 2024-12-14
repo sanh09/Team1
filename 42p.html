@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>날짜, 시간, 꽃 배우기</title>
+  <link rel="stylesheet" href="42p.css">
+</head>
+<body>
+  <div id="app"></div>
+
+  <script>
+    // 메인 컨테이너 생성
+    const app = document.getElementById('app');
+
+    // 날짜와 날씨 섹션
+    const dateWeatherSection = document.createElement('div');
+    dateWeatherSection.innerHTML = `
+      <h2>오늘의 날짜와 날씨</h2>
+      <label>날짜를 입력하세요:</label>
+      <input type="date" id="dateInput"><br>
+      <label>날씨를 선택하세요:</label>
+      <select id="weatherSelect">
+        <option value="sunny">맑음</option>
+        <option value="cloudy">흐림</option>
+        <option value="rainy">비</option>
+        <option value="snowy">눈</option>
+      </select><br>
+      <button onclick="displayDateWeather()">확인</button>
+      <p id="dateWeatherOutput"></p>
+    `;
+    app.appendChild(dateWeatherSection);
+
+    // 현재 시각 섹션
+    const clockSection = document.createElement('div');
+    clockSection.innerHTML = `
+      <h2>현재 시각</h2>
+      <label>시간을 입력하세요:</label><br>
+      <input type="number" id="hourInput" placeholder="시 (0-23)">
+      <input type="number" id="minuteInput" placeholder="분 (0-59)"><br>
+      <button onclick="displayClock()">시간 표시</button>
+      <p id="clockOutput"></p>
+      <p id="clockTimer"></p>
+    `;
+    app.appendChild(clockSection);
+
+    // 꽃 섹션
+    const flowerSection = document.createElement('div');
+    flowerSection.innerHTML = `<h2>꽃 이름 기억하기</h2><div id="flowerContainer"></div>`;
+    app.appendChild(flowerSection);
+
+    // 다음 페이지 버튼
+    const nextPageButton = document.createElement('a');
+    nextPageButton.href = '43p.html';
+    nextPageButton.id = 'nextPageButton';
+    nextPageButton.innerText = '다음 페이지';
+    app.appendChild(nextPageButton);
+
+    // 꽃 데이터
+    const flowers = [
+      { name: '철쭉', file: '철쭉.jpg' },
+      { name: '개나리', file: '개나리.jpg' },
+      { name: '백목련', file: '백목련.jpg' },
+      { name: '백일홍', file: '백일홍.jpg' },
+      { name: '장미', file: '장미.jpg' },
+      { name: '참꽃', file: '참꽃.jpg' }
+    ];
+
+    // 꽃 표시 함수
+    function displayFlowers() {
+      const container = document.getElementById('flowerContainer');
+      flowers.forEach(flower => {
+        const flowerDiv = document.createElement('div');
+        const img = document.createElement('img');
+        img.src = flower.file;
+        img.alt = flower.name;
+        const name = document.createElement('p');
+        name.innerText = flower.name;
+        flowerDiv.appendChild(img);
+        flowerDiv.appendChild(name);
+        container.appendChild(flowerDiv);
+      });
+    }
+
+    // 날짜와 날씨 출력 함수
+    function displayDateWeather() {
+      const date = document.getElementById('dateInput').value;
+      const weather = document.getElementById('weatherSelect').value;
+      const weatherText = {
+        sunny: '맑음',
+        cloudy: '흐림',
+        rainy: '비',
+        snowy: '눈'
+      }[weather];
+      document.getElementById('dateWeatherOutput').innerText =
+        `선택한 날짜는 ${date}이고, 날씨는 ${weatherText}입니다.`;
+    }
+
+    // 시각 출력 함수
+    function displayClock() {
+      const hour = parseInt(document.getElementById('hourInput').value, 10);
+      const minute = parseInt(document.getElementById('minuteInput').value, 10);
+      if (isNaN(hour) || isNaN(minute) || hour < 0 || hour > 23 || minute < 0 || minute > 59) {
+        document.getElementById('clockOutput').innerText = '유효한 시간을 입력해주세요.';
+        return;
+      }
+      const period = hour < 12 ? '오전' : '오후';
+      const adjustedHour = hour % 12 || 12;
+      document.getElementById('clockOutput').innerText =
+        `현재 시간은 ${period} ${adjustedHour}시 ${minute}분입니다.`;
+    }
+
+    // 실시간 시간 표시
+    setInterval(() => {
+      const now = new Date();
+      document.getElementById('clockTimer').innerText =
+        `실시간 시간: ${now.getHours()}시 ${now.getMinutes()}분 ${now.getSeconds()}초`;
+    }, 1000);
+
+    // 초기화
+    displayFlowers();
+  </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>꽃말 매칭 게임</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            gap:40px;
+        }
+        .flower-container, .meaning-container {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: nowrap;
+            margin-bottom: 20px;
+        }
+        .flower-item, .meaning-item {
+            width: 150px;
+            height: 150px;
+            margin: 0 10px;
+            border: 7px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .flower-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .meaning-item {
+            font-size: 16px;
+            text-align: center;
+            padding: 10px;
+        }
+        .selected {
+            border-color: #007bff;
+        }
+        .correct {
+            background-color: #90EE90;
+            border-color: #FF0000;
+        }
+    </style>
+</head>
+<body>
+    <h1>앞서 기억해 둔 꽃과 꽃말을 연결해보세요.</h1>
+    <div class="container">
+        <div id="flowerContainer" class="flower-container">
+            <div class="flower-item" data-id="1">
+                <img src="장미.jpg" alt="장미">
+            </div>
+            <div class="flower-item" data-id="2">
+                <img src="백일홍.jpg" alt="백일홍">
+            </div>
+            <div class="flower-item" data-id="3">
+                <img src="철쭉.jpg" alt="철쭉">
+            </div>
+            <div class="flower-item" data-id="4">
+                <img src="참꽃.jpg" alt="참꽃">
+            </div>
+            <div class="flower-item" data-id="5">
+                <img src="백목련.jpg" alt="백목련">
+            </div>
+            <div class="flower-item" data-id="6">
+                <img src="개나리.jpg" alt="개나리">
+            </div>
+        </div>
+        <div id="meaningContainer" class="meaning-container">
+            <div class="meaning-item">사랑</div>
+            <div class="meaning-item">행복</div>
+            <div class="meaning-item">사랑의 즐거움</div>
+            <div class="meaning-item">다정</div>
+            <div class="meaning-item">이루지 못할 사랑</div>
+            <div class="meaning-item">희망</div>
+        </div>
+        <form id = "Diaryform" action="48p.html" method="get" style="display: none;">
+            <input type="submit" value="일기 페이지로 이동">
+        </form>
+    </div>
+    <script>
+        const flowerData = [
+            { id: 1, image: '장미.jpg', meaning: '사랑' },
+            { id: 2, image: '백일홍.jpg', meaning: '행복' },
+            { id: 3, image: '철쭉.jpg', meaning: '사랑의 즐거움' },
+            { id: 4, image: '참꽃.jpg', meaning: '다정' },
+            { id: 5, image: '백목련.jpg', meaning: '이루지 못할 사랑' },
+            { id: 6, image: '개나리.jpg', meaning: '희망' }
+        ];
+
+        let selectedFlower = null;
+        let selectedMeaning = null;
+        const correctPairs = new Map();
+
+        const onClickFlower = (flowerId, element) => {
+            if (!(flowerId in correctPairs)) {
+                const flowers = document.querySelectorAll('.flower-item');
+                for (let i = 0; i < flowers.length; i++) {
+                    if(!flowers[i].classList.contains('correct'))
+                        flowers[i].classList.remove('selected');
+                }
+            }
+            element.classList.add('selected');
+            selectedFlower = { id: flowerId, element: element};
+            checkMatch();
+        }
+
+        const onClickMeaning = (meaning, element) => {
+            if (!element.classList.contains('correct')) {
+                document.querySelectorAll('.meaning-item:not(.correct)').forEach(el => el.classList.remove('selected'));
+                element.classList.add('selected');
+                selectedMeaning = { meaning, element };
+                checkMatch();
+            }
+        }
+
+        const checkMatch = () => {
+            if (selectedFlower && selectedMeaning) {
+                const flower = flowerData.find(f => f.id === selectedFlower.id);
+                const isCorrect = flower && flower.meaning === selectedMeaning.meaning;
+                matchResult(isCorrect);
+            }
+        }; 
+
+        const matchResult = (isCorrect) => {
+            if (isCorrect) {
+                selectedFlower.element.classList.add('correct');
+                selectedMeaning.element.classList.add('correct');
+                correctPairs.set(selectedFlower.id, selectedMeaning.meaning);
+                setTimeout(gameFinish, 300);
+            }
+
+            setTimeout(() => {
+                document.querySelectorAll('.selected').forEach(el => {
+                    if (!el.classList.contains('correct')) {
+                        el.classList.remove('selected');
+                    }
+                });
+                if (!isCorrect) {
+                    selectedFlower = null;
+                    selectedMeaning = null;
+                }
+            }, 1000);
+        }
+
+        const gameFinish = () => {
+            if (correctPairs.size === flowerData.length) {
+                setTimeout(() => {
+                    alert('축하합니다! 모든 매칭을 완료했습니다!');
+                    const Diary = confirm(`일기 페이지로 넘어가시겠습니까?`);
+                    if(Diary) {
+                        document.querySelector('#Diaryform').submit();
+                        
+                    }
+                }, 500);
+            }
+        }
+
+
+        const startGame = () => {
+            const flowerItems = document.querySelectorAll('.flower-item');
+            const meaningItems = document.querySelectorAll('.meaning-item');
+            
+            flowerItems.forEach(item => {
+                item.addEventListener('click', () => onClickFlower(parseInt(item.dataset.id), item));
+            });
+            
+            meaningItems.forEach(item => {
+                item.addEventListener('click', () => onClickMeaning(item.textContent, item));
+            });
+
+            const flowerContainer = document.querySelector('#flowerContainer');
+            const flowerItemsArray = Array.from(flowerContainer.children);
+            flowerItemsArray.sort(() => Math.random() - 0.5);
+            flowerItemsArray.forEach(item => flowerContainer.appendChild(item));
+
+            const meaningContainer = document.querySelector('#meaningContainer');
+            const meaningItemsArray = Array.from(meaningContainer.children);
+            meaningItemsArray.sort(() => Math.random() - 0.5);
+            meaningItemsArray.forEach(item => meaningContainer.appendChild(item));
+
+        }
+
+        startGame();
+        
+    </script>
+</body>
+</html>

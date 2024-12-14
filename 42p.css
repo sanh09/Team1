@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  
+  h2 {
+    color: #333;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  #nextPageButton {
+    background-color: #87CEEB;
+    color: #fff;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 20px auto;
+  }
+  
+  #nextPageButton:hover {
+    background-color: #4682B4;
+  }
+  
+  #flowerContainer div {
+    display: inline-block;
+    text-align: center;
+    margin: 10px;
+  }
+  
+  #flowerContainer img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  #flowerContainer p {
+    margin-top: 5px;
+    font-size: 14px;
+  }
+  

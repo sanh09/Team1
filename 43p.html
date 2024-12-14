@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>도별 꽃 이름 학습</title>
+  <link rel="stylesheet" href="43p.css">
+</head>
+
+<body>
+  <h1>도별 꽃 이름 학습</h1>
+  <p>도와 연결된 꽃 이름을 입력하고 결과를 확인하세요!</p>
+
+  <div id="flowerSection" class="flower-section"></div>
+  <button id="checkUpperButton">상단 정답 확인</button>
+
+  <div class="map-container">
+    <img src="map.gif" alt="한국 지도" style="width: 100%; max-width: 400px;">
+  </div>
+
+  <div id="flowerSectionBelow" class="flower-section"></div>
+  <button id="checkButton">결과 확인</button>
+  <p id="resultMessage"></p>
+  <button id="nextPageButton" onclick="location.href='44p.html'">다음 페이지</button>
+
+  <script>
+    const flowers = [
+      { region: '강원도', flower: '철쭉', image: '철쭉.jpg' },
+      { region: '경기도', flower: '개나리', image: '개나리.jpg' },
+      { region: '충청도', flower: '백목련', image: '백목련.jpg' },
+      { region: '전라도', flower: '백일홍', image: '백일홍.jpg' },
+      { region: '경상도', flower: '장미', image: '장미.jpg' },
+      { region: '제주도', flower: '참꽃', image: '참꽃.jpg' }
+    ];
+
+    const createFlowerInputs = (sectionId, includeImages) => {
+      const section = document.getElementById(sectionId);
+      flowers.forEach(({ region, flower, image }) => {
+        const box = document.createElement('div');
+        box.className = 'flower-box';
+
+        if (includeImages) {
+          const img = document.createElement('img');
+          img.src = image;
+          img.alt = flower;
+          box.appendChild(img);
+        }
+
+        const label = document.createElement('label');
+        label.innerText = region;
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.placeholder = '꽃 이름 입력';
+        input.dataset.region = region;
+
+        box.appendChild(label);
+        box.appendChild(input);
+        section.appendChild(box);
+      });
+    };
+
+    const checkUpperAnswers = () => {
+      const inputs = document.querySelectorAll('#flowerSection .flower-box input');
+      let correctCount = 0;
+
+      inputs.forEach(input => {
+        const answer = flowers.find(f => f.region === input.dataset.region).flower;
+        if (input.value.trim() === answer) {
+          input.style.border = '2px solid green';
+          correctCount++;
+        } else {
+          input.style.border = '2px solid red';
+        }
+      });
+
+      document.getElementById('resultMessage').innerText =
+        `상단: 총 ${inputs.length}개 중 ${correctCount}개를 맞췄습니다!`;
+    };
+
+    const checkAnswers = () => {
+      const inputs = document.querySelectorAll('.flower-box input');
+      let correctCount = 0;
+
+      inputs.forEach(input => {
+        const answer = flowers.find(f => f.region === input.dataset.region).flower;
+        if (input.value.trim() === answer) {
+          input.style.border = '2px solid green';
+          correctCount++;
+        } else {
+          input.style.border = '2px solid red';
+        }
+      });
+
+      document.getElementById('resultMessage').innerText =
+        `총 ${inputs.length}개 중 ${correctCount}개를 맞췄습니다!`;
+    };
+
+    document.getElementById('checkUpperButton').addEventListener('click', checkUpperAnswers);
+    document.getElementById('checkButton').addEventListener('click', checkAnswers);
+    createFlowerInputs('flowerSection', true);
+    createFlowerInputs('flowerSectionBelow', false);
+  </script>
+</body>
+
+</html>

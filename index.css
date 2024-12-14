@@ -1,0 +1,22 @@
+/* */
+form {
+    margin: 60px auto; /* 첫번째(위아래), 두번째(왼쪽오른쪽)가 자동적으로 마진해서 중앙에 위치 */
+    /* 패딩이 내부여백 마진이 위아래?외부여백 */
+    width: 24rem;
+    /* rem:해당비율에 맞게 자동조정(반응형에 좋음), px:정확한 크기 정해줌(폰이나 웹이던 크기가같음), %:부모에 맞게 비율에 맞춤 */
+}
+
+.form_group {
+    margin-bottom: 0.5rem;
+}
+
+label {
+    display: block; /* display는 그룹화 block은 박아놈*/
+}
+
+input {
+    box-sizing: border-box; /* 박스크기는 경계선에 있는 박스크기까지 한다 */
+    padding: 0.5rem; /* 커서 띄우는 정도 */
+    width: 100%; /* 부모form에 rem을 정했기때문에 부모넓이 다쓴다는말*/
+    border: 1px solid #ddd; /* 테두리, solid는 직선 */
+}

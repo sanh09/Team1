@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>지하털 노선 문제</title>
+        <link rel="stylesheet" href="page45.css" />
+    </head>
+
+    <body>
+        <h1>지하철 노선 문제</h1>
+        <div class="question">
+            <img src="노선.png" alt="노선도" />
+            <h3>1. 선릉역에서 사당역까지 가는 경로와 소요시간</h3>
+            <p>
+                2호선을 타고 선릉역에서 사당역까지 가는 경로를 적으세요.<br />각
+                역마다 소요시간은 <strong>2분</strong>입니다.
+            </p>
+            <div class="input-section">
+                <label for="line2-path">경로 (예 : 선릉, 역삼, ...):</label
+                ><br />
+                <input
+                    type="text"
+                    id="line2-path"
+                    placeholder="경로를 입력하세요"
+                    style="width: 90%"
+                /><br />
+            </div>
+            <br />
+            <div class="input-time">
+                <label for="line2-time1">소요시간</label><br />
+                <input
+                    type="text"
+                    id="line2-time"
+                    placeholder="소요시간을 입력하세요"
+                />
+            </div>
+            <br />
+            <button id="check1" onclick="checkTime1()">확인</button>
+            <p class="result" id="result1"></p>
+        </div>
+
+        <div class="question">
+            <h3>2. 양재역에서 동작역까지 가장 빠른 경로</h3>
+            <p>
+                3호선을 타고 환승을 포함하여 양재역에서 동작역까지 가는 경로를
+                적으세요. <br />각 역마다 소요시간은 <strong>2분</strong>, 환승
+                소요시간은 <strong>5분</strong>입니다.
+            </p>
+            <div class="input-section">
+                <label for="line3-path">경로 (예: 양재, 환승역, ...):</label
+                ><br />
+                <input
+                    type="text"
+                    id="line3-path"
+                    placeholder="경로를 입력하세요"
+                    style="width: 90%"
+                />
+                <br />
+                <br />
+                <label for="transfer-station">환승역</label><br />
+                <input
+                    type="text"
+                    id="transfer-station"
+                    placeholder="환승역을 입력하세요"
+                /><br /><br />
+            </div>
+            <div class="input-time">
+                <label for="line3-time">소요시간</label><br />
+                <input
+                    type="text"
+                    id="line3-time"
+                    placeholder="소요시간을 입력하세요"
+                />
+            </div>
+            <br />
+            <button id="check2" onclick="checkTime2()">확인</button>
+            <p class="result" id="result2"></p>
+        </div>
+        <div class="buttons">
+            <button
+                id="retry-btn"
+                class="button-retry"
+                onclick="resetQuiz()"
+                style="display: none"
+            >
+                다시 풀기
+            </button>
+            <a href="page46.html" id="next-btn" class="button-link"
+                >다음 문제</a
+            >
+        </div>
+
+        <script>
+            const correctPath1 = '선릉, 역삼, 강남, 교대, 서초, 방배, 사당';
+            const correctStations1 = correctPath1
+                .split(',')
+                .map((s) => s.trim());
+            const correctPath2 =
+                '양재, 남부터미널, 교대, 고속터미널, 신반포, 구반포, 동작';
+            const correctStations2 = correctPath2
+                .split(',')
+                .map((s) => s.trim());
+            const correctTransferStation2 = '고속터미널';
+
+            function checkTime1() {
+                const path = document.getElementById('line2-path').value;
+                const time = document.getElementById('line2-time').value;
+                const button = document.querySelector('button[id = "check1"]');
+                if (!path || !time) {
+                    alert('경로와 소요시간을 모두 입력하세요!');
+                    return;
+                }
+                const correctTime1 = correctStations1.length * 2;
+
+                if (
+                    path == correctPath1 &&
+                    (time == correctTime1 || time == correctTime1 + '분')
+                ) {
+                    button.style.display = 'none';
+                    document.getElementById(
+                        'result1'
+                    ).innerText = `정답입니다!`;
+                    checkAllCorrect();
+                } else {
+                    alert('경로 또는 소요시간이 틀렸습니다. 다시 입력하세요!');
+                    document.getElementById('line2-path').value = '';
+                    document.getElementById('line2-time').value = '';
+                    return;
+                }
+            }
+
+            function checkTime2() {
+                const path = document.getElementById('line3-path').value;
+                const transferStation =
+                    document.getElementById('transfer-station').value;
+                const time = document.getElementById('line3-time').value;
+                const button = document.querySelector('button[id = "check2"]');
+
+                if (!path || !transferStation || !time) {
+                    alert('경로와 환승역, 소요시간을 모두 입력하세요!');
+                    return;
+                }
+
+                const correctTime2 = correctStations2.length * 2 + 5;
+
+                if (
+                    path === correctPath2 &&
+                    transferStation === correctTransferStation2 &&
+                    (time == correctTime2 || time === correctTime2 + '분')
+                ) {
+                    document.getElementById('result2').innerText =
+                        '정답입니다!';
+                    button.style.display = 'none';
+                    checkAllCorrect();
+                } else {
+                    alert('경로 또는 소요시간이 틀렸습니다. 다시 입력하세요!');
+                    document.getElementById('line3-path').value = '';
+                    document.getElementById('transfer-station').value = '';
+                    document.getElementById('line3-time').value = '';
+                    return;
+                }
+            }
+
+            function checkAllCorrect() {
+                const result1 = document.getElementById('result1').innerText;
+                const result2 = document.getElementById('result2').innerText;
+                const nextBtn = document.getElementById('next-btn');
+                const retryBtn = document.getElementById('retry-btn');
+
+                if (result1 === '정답입니다!' && result2 === '정답입니다!') {
+                    nextBtn.style.display = 'inline-block';
+                } else {
+                    retryBtn.style.display = 'inline-block';
+                }
+            }
+
+            function resetQuiz() {
+                window.location.href = 'page45.html';
+            }
+        </script>
+    </body>
+</html>

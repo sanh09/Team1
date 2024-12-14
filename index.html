@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1조</title>
+    <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+    <form> <!-- 폼을 해야 라벨을 쓸 수 있음(짝꿍), 라벨을 쓰는 이유가 여긴 아이디에요 라고 이름 붙이려고 -->
+        <h1>로그인</h1>
+        <div class="form_group"> <!-- 구역마다 같은 css를 주려고 -->
+            <label for="id">Id
+                <input type="text" id="id"> <!--폼안에서 라벨이랑 인풋은 짝꿍, 인풋은 뭐를 작성할건지 직설적으로 표현, 아이디는 자바스크립트와 연결해주기위함-->
+            </label>
+        </div>
+        <div class="form_group">
+            <label for="pw">Password
+                <input type="text" id="pw">
+            </label>
+        </div>
+        <div class="form_group">
+            <button type="submit">로그인</button>
+        </div> <!-- div는 블록형식 한층을 잡아먹음, span은 차지하는 크기만큼만 잡아먹음-->
+    </form>
+    <script src="index.css"></script>
+</body>
+
+</html>

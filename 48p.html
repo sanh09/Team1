@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 하루 일기</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0 300px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            aspect-ratio: 16 / 9;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: auto;
+        }
+        .diary-form {
+            width: 100%;
+            height: 100%;
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+        .date-header {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        .weather-icons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .time-slot {
+            margin: 15px 0;
+            padding: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        textarea {
+            width: 100%;
+            min-height: 60px;
+            margin-top: 5px;
+            padding: 0 5px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            margin: 5px 0;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            margin: 20px 0;
+            padding: 0 15px;
+        }
+
+        .column {
+            flex: 1;
+            padding: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="diary-form">
+        <div class="header">
+            <input type="date" id="Date">
+            <div class="weather">
+                날씨:
+                <label><input type="radio" name="weather" value="sunny"> ☀️</label>
+                <label><input type="radio" name="weather" value="cloudy"> ☁️</label>
+                <label><input type="radio" name="weather" value="rainy"> ☔</label>
+                <label><input type="radio" name="weather" value="windy"> 🌪</label>
+            </div>
+        </div>
+        <div class="diaryText">
+            <div class="row">
+                <div class="column">
+                    <h3>방문한 장소</h3>
+                    <input type="text" id="Place">
+                </div>
+                <div class="column">
+                    <h3>오늘 만난 사람</h3>
+                    <input type="text" id="People">
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <h3>구입한 물건</h3>
+                    <input type="text" id="buy">
+                </div>
+                <div class="column">  
+                    <h3>지출 금액</h3>
+                    <input type="text" id="coin">
+                </div>
+            </div>
+            <div>
+                <h3>오늘의 뉴스</h3>
+                <input type="text" id="News">
+            </div>
+        </div>
+        <div class="diaryTime">
+            <div class="Time">
+                <h3>오전(5시~8시)</h3>
+                <textarea placeholder="일어나서 한 일"></textarea>
+            </div>
+            <div class="Time">
+                <h3>오전(8시~12시)</h3>
+                <textarea placeholder="아침식사 후에 한 일"></textarea>
+            </div>
+            <div class="Time">
+                <h3>오후(12시~5시)</h3>
+                <textarea placeholder="오후에 한 일"></textarea>
+            </div>
+            <div class="Time">
+                <h3>오후(5시~10시)</h3>
+                <textarea placeholder="저녁식사 후에 한 일"></textarea>
+            </div>
+        </div>
+        <button onclick="saveDiary()">저장</button>
+        <button onclick="goToPage()">이전페이지로 이동</button>
+    </div>
+    <script>
+        let diaryData = {};
+        const goToPage = () => {
+            const link = document.createElement('a');
+            link.href = '47p.html';
+            link.click();
+        }
+        const writeDiary = (date, content) => {
+            diaryData[date] = content;
+        }
+
+        const loadDiaryData = (date) => {
+            const data = diaryData[date];
+            if (data) {
+                document.querySelector('#Place').value = data.place || '';
+                document.querySelector('#People').value = data.people || '';
+                document.querySelector('#buy').value = data.buy || '';
+                document.querySelector('#coin').value = data.coin || '';
+                document.querySelector('#News').value = data.news || '';
+                if (data.weather) {
+                    document.querySelector(`input[name="weather"][value="${data.weather}"]`).checked = true;
+                }
+                document.querySelectorAll('.Time textarea').forEach((textarea, index) => {
+                    textarea.value = data.diaryTime[index] || '';
+                });
+            }
+        };
+
+        const clearForm = () => {
+            document.querySelector('#Place').value = '';
+            document.querySelector('#People').value = '';
+            document.querySelector('#buy').value = '';
+            document.querySelector('#coin').value = '';
+            document.querySelector('#News').value = '';
+            document.querySelectorAll('input[name="weather"]').forEach(radio => radio.checked = false);
+            document.querySelectorAll('.Time textarea').forEach(textarea => textarea.value = '');
+        };
+
+        const readDiary = (selectedDate) => {
+            const today = new Date().toISOString().split('T')[0];
+
+            if (selectedDate === today) {
+                clearForm();
+            } else if (diaryData[selectedDate]) {
+                if (confirm('해당 날짜의 일기가 있습니다. 불러오시겠습니까?')) {
+                    loadDiaryData(selectedDate);
+                } else {
+                    document.querySelector('#Date').value = '';
+                }
+            } else {
+                if (confirm('해당 날짜의 일기를 작성하시겠습니까?')) {
+                    clearForm();
+                } else {
+                    document.querySelector('#Date').value = '';
+                }
+            }
+        };
+        
+        const saveDiary = () => {
+            const date = document.querySelector('#Date').value;
+            if (!date) {
+                alert('날짜를 선택해주세요.');
+                return;
+            }
+            const diaryTime = [];
+            document.querySelectorAll('.Time textarea').forEach(textarea => {
+                diaryTime.push(textarea.value);
+            });
+            const data = {
+                place: document.querySelector('#Place').value,
+                people: document.querySelector('#People').value,
+                buy: document.querySelector('#buy').value,
+                coin: document.querySelector('#coin').value,
+                news: document.querySelector('#News').value,
+                weather: document.querySelector('input[name="weather"]:checked')?.value,
+                diaryTime: diaryTime
+            };
+
+            writeDiary(date, data);
+            alert('일기가 저장되었습니다.');
+        };
+
+        document.querySelector('#Date').addEventListener('change', (event) => {
+            readDiary(event.target.value);
+        });
+    </script>
+</body>
+</html>
