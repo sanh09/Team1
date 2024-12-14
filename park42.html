@@ -10,7 +10,7 @@
   <div id="app"></div>
 
   <script>
-    // 메인 컨테이너 생성
+ 
     const app = document.getElementById('app');
 
     // 날짜와 날씨 섹션
@@ -31,7 +31,7 @@
     `;
     app.appendChild(dateWeatherSection);
 
-    // 현재 시각 섹션
+   
     const clockSection = document.createElement('div');
     clockSection.innerHTML = `
       <h2>현재 시각</h2>
@@ -44,19 +44,19 @@
     `;
     app.appendChild(clockSection);
 
-    // 꽃 섹션
+
     const flowerSection = document.createElement('div');
     flowerSection.innerHTML = `<h2>꽃 이름 기억하기</h2><div id="flowerContainer"></div>`;
     app.appendChild(flowerSection);
 
-    // 다음 페이지 버튼
+
     const nextPageButton = document.createElement('a');
     nextPageButton.href = 'park43.html';
     nextPageButton.id = 'nextPageButton';
     nextPageButton.innerText = '다음 페이지';
     app.appendChild(nextPageButton);
 
-    // 꽃 데이터
+
     const flowers = [
       { name: '철쭉', file: '철쭉.jpg' },
       { name: '개나리', file: '개나리.jpg' },
@@ -66,7 +66,7 @@
       { name: '참꽃', file: '참꽃.jpg' }
     ];
 
-    // 꽃 표시 함수
+
     function displayFlowers() {
       const container = document.getElementById('flowerContainer');
       flowers.forEach(flower => {
@@ -82,7 +82,7 @@
       });
     }
 
-    // 날짜와 날씨 출력 함수
+   
     function displayDateWeather() {
       const date = document.getElementById('dateInput').value;
       const weather = document.getElementById('weatherSelect').value;
@@ -96,7 +96,7 @@
         `선택한 날짜는 ${date}이고, 날씨는 ${weatherText}입니다.`;
     }
 
-    // 시각 출력 함수
+ 
     function displayClock() {
       const hour = parseInt(document.getElementById('hourInput').value, 10);
       const minute = parseInt(document.getElementById('minuteInput').value, 10);
@@ -110,14 +110,14 @@
         `현재 시간은 ${period} ${adjustedHour}시 ${minute}분입니다.`;
     }
 
-    // 실시간 시간 표시
+    
     setInterval(() => {
       const now = new Date();
       document.getElementById('clockTimer').innerText =
         `실시간 시간: ${now.getHours()}시 ${now.getMinutes()}분 ${now.getSeconds()}초`;
     }, 1000);
 
-    // 초기화
+   
     displayFlowers();
   </script>
 </body>
